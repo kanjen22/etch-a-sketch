@@ -6,19 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <!-- <script src="javascript.js" defer></script> -->
 </head>
 
 <body>
     <div class="titleContainer">
+        <img class="pencil-img" src="./images/pencil.png">
         <h1 class="title">Etch-a-Sketch</h1>
     </div>
     <div class="mainContainer">
+        <div class="slideContainer">
+            <div><input type="range" min="10" max="100" id="gridSize-pan"></div>
+            <div>
+                <p>grid size</p>
+                <p id="gridSize"></p>
+            </div>
+        </div>
         <div class="gridBoard"></div>
     </div>
     <div class="pencilContainer">
-        <button id="pencil">pencil</button>
+        <button id="pencil">pencil <input id="color-pan" type="color" value="#000000"/></button>
         <button id="rainbow">rainbow</button>
+        <button id="gradient">gradient</button>
         <button id="eraser">eraser</button>
         <button id="clear">clear</button>
     </div>
