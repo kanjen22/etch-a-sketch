@@ -12,7 +12,7 @@ html, body {
 
 .title {
     font-size: 50px;
-    font-weight: 1000;
+    font-weight: 1500;
 }
 
 
@@ -49,6 +49,9 @@ html, body {
 
 .grid {
     background-color: white;
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 1px;
 }
 
 .pencilContainer {
@@ -73,7 +76,7 @@ footer {
     justify-content: center;
     align-items: center;
     background-color: lightgrey;
-    font-size: 15px;
+    font-size: 20px;
     gap: 10px;
     padding: 20px;
 }
