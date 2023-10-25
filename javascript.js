@@ -1,36 +1,72 @@
 // parameters
-const GRID_BOARD_SIZE = 400;
+const GRID_BOARD_SIZE = 600;
 let DefaultGridNum = 50;
-let currentMode = 'pencil';
+let curMode = 'pencil';
+let pencilColor = 'black';
+let gradientColor = 0;
 let mouseDown = false;
-const eraser = document.getElementById("eraser")
+const rangeBar = document.getElementById("gridSize-pan")
+const gridSize = document.getElementById("gridSize")
 const pencil = document.getElementById("pencil")
+const rainbow = document.getElementById("rainbow")
+const gradient = document.getElementById("gradient")
+const eraser = document.getElementById("eraser")
 const clear = document.getElementById("clear")
+const colorPan = document.getElementById("color-pan")
 
 // create grid box
 plotGridBoard(DefaultGridNum);
+rangeBar.value = DefaultGridNum;
+gridSize.innerHTML = `${rangeBar.value} x ${rangeBar.value}`; // Display the default slider value
 
 // add eventListener
-document.body.onmousedown = () => (mouseDown = true);
-document.body.onmouseup = () => (mouseDown = false);
-eraser.addEventListener('click', (e) => {
-    highlightButton(e.target.textContent);
-    currentMode = 'eraser';
-})
+document.body.onmousedown = (e) => {
+    if (e.target.tagName !== 'INPUT' && e.target.type !== "range") e.preventDefault();
+    mouseDown = true;
+};
+document.body.onmouseup = (e) => {
+    // Update the current slider value (each time you drag the slider handle)
+    if (e.target.tagName === 'INPUT' && e.target.type === "range") {
+        DefaultGridNum = rangeBar.value;
+        plotGridBoard(DefaultGridNum);
+        gridSize.innerHTML = `${rangeBar.value} x ${rangeBar.value}`;
+    }
+    mouseDown = false;
+}
+
 pencil.addEventListener('click', (e) => {
     highlightButton(e.target.textContent);
-    currentMode = 'pencil';
+    curMode = 'pencil';
 })
+
 rainbow.addEventListener('click', (e) => {
     highlightButton(e.target.textContent);
-    currentMode = 'rainbow';
+    curMode = 'rainbow';
+})
+
+gradient.addEventListener('click', (e) => {
+    highlightButton(e.target.textContent);
+    curMode = 'gradient';
+})
+
+eraser.addEventListener('click', (e) => {
+    highlightButton(e.target.textContent);
+    curMode = 'eraser';
+})
+
+colorPan.addEventListener('click', (e) => {
+    e.stopPropagation();
 })
 clear.addEventListener('click', clearGrid)
-
 
 function plotGridBoard(DefaultGridNum) {
     const gridBoard = document.querySelector(".gridBoard");
     const gridSize = GRID_BOARD_SIZE / DefaultGridNum;
+    // remove existing grids before adding new grids
+    while (gridBoard.firstChild) {
+        gridBoard.removeChild(gridBoard.firstChild);
+    }
+    // adding new grids
     for (let r = 0; r < DefaultGridNum; r++) {
         const rowGridBox = document.createElement("div")
         rowGridBox.className = "rowGridBox";
@@ -53,14 +89,17 @@ function createGrid(gridSize) {
 function changeColor(e) {
     if (!mouseDown) return
     grid = e.target;
-    if (currentMode === 'pencil') {
-        grid.style.backgroundColor = 'black';
-    } else if (currentMode == 'eraser') {
-        grid.style.backgroundColor = 'white';
-    } else if (currentMode == 'rainbow') {
+    if (curMode === 'pencil') {
+        grid.style.backgroundColor = colorPan.value;
+    } else if (curMode == 'rainbow') {
         grid.style.backgroundColor = getRandomRGB();
+    } else if (curMode == 'gradient') {
+        grid.style.backgroundColor = `rgb(${gradientColor}, ${gradientColor}, ${gradientColor})`;
+        gradientColor += 5
+        gradientColor = (gradientColor < 256) ? gradientColor : 0; 
+    } else if (curMode == 'eraser') {
+        grid.style.backgroundColor = 'white';
     }
-
 }
 
 function clearGrid() {
@@ -72,7 +111,7 @@ function clearGrid() {
 
 function getRandomRGB() {
     var o = Math.round, r = Math.random, s = 255;
-    return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+    return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
 }
 
 function highlightButton(curBtn) {
@@ -86,4 +125,18 @@ function highlightButton(curBtn) {
     })
 }
 
+// For mobile device to draw by touchdown
+document.body.addEventListener('pointerdown', (e) => {
+    if (e.target.tagName !== 'INPUT' && e.target.type !== "range") e.preventDefault();
+    mouseDown = true;
+}, false);
 
+document.body.addEventListener('pointerup', (e) => {
+    // Update the current slider value (each time you drag the slider handle)
+    if (e.target.tagName === 'INPUT' && e.target.type === "range") {
+        DefaultGridNum = rangeBar.value;
+        plotGridBoard(DefaultGridNum);
+        gridSize.innerHTML = `${rangeBar.value} x ${rangeBar.value}`;
+    }
+    mouseDown = false;
+}, false);

@@ -1,13 +1,20 @@
-html, body {
+html,
+body {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     height: 100%;
     background-color: grey;
     font-family: 'Roboto', sans-serif;
 }
 
+/* TITLE */
 .titleContainer {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 60px;
+    background-color: lightgrey;
 }
 
 .title {
@@ -15,12 +22,71 @@ html, body {
     font-weight: 1000;
 }
 
-
-.mainContainer {
-    display: flex;
-    justify-content: center;
+.pencil-img {
+    height: 120px;
 }
 
+/* MAIN-CONTENT */
+.mainContainer {
+    display: flex;
+    flex-grow: 1;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+.slideContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+}
+
+.slideContainer p {
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.slideContainer input {
+    top: 40%;
+    transform: rotate(270deg);
+}
+
+#gridSize-pan {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+#gridSize-pan::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+#gridSize-pan::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
 
 .gridBoard {
     display: flex;
@@ -35,6 +101,7 @@ html, body {
     padding: 50px 50px;
     gap: 0px;
     margin: 0px;
+    box-sizing: border-box;
 }
 
 .rowGridBox {
@@ -49,15 +116,29 @@ html, body {
 
 .grid {
     background-color: white;
+    /* show grid-lines */
+    /* border-style: solid;
+    border-color: lightgrey;
+    border-width: 1px; */
 }
 
+/* PENCIL—CONTAINER */
 .pencilContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     font-size: 30px;
     gap: 100px;
-    padding: 50px;
+    padding-top: 15px;
+    padding-bottom: 30px;
+}
+
+#pencil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
 }
 
 button {
@@ -67,13 +148,34 @@ button {
     padding: 10px 20px 10px 20px;
 }
 
+#color-pan {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+}
+
+#color-pan::-webkit-color-swatch {
+    border-radius: 50%;
+    border: 4px solid #000000;
+}
+
+#color-pan::-moz-color-swatch {
+    border-radius: 50%;
+    border: 4px solid #000000;
+}
+
 /* FOOTER */
 footer {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: lightgrey;
-    font-size: 15px;
+    font-size: 20px;
     gap: 10px;
     padding: 20px;
 }
